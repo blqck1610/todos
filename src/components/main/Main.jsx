@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 const Main = () => {
-//   const [todos, setTodos] = useState(tds)
+  //   const [todos, setTodos] = useState(tds)
   const todos = useSelector(state => state.todos)
   const dispatch = useDispatch()
 
@@ -50,8 +50,7 @@ const Main = () => {
   const handleChange = (e, i) => {
     dispatch({
       type: 'UPDATE_TODO',
-      payload: { index: i, content: e.target.value}
- 
+      payload: { index: i, content: e.target.value }
     })
 
     // const updateTodos = todos.map((todo, index) => {
@@ -88,7 +87,7 @@ const Main = () => {
                   <span>{todo.content}</span>
                 ) : (
                   <input
-                    value={todo.content} required
+                    value={todo.content}
                     onChange={e => handleChange(e, index)}
                   />
                 )}
