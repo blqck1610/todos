@@ -1,28 +1,45 @@
 import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 const Main = () => {
-  const [todos, setTodos] = useState(tds)
+//   const [todos, setTodos] = useState(tds)
+  const todos = useSelector(state => state.todos)
+  const dispatch = useDispatch()
+
   const [isEdit, setIsEdit] = useState(-1)
   const [newTodo, setNewTodo] = useState('')
 
   const handleChangeBox = (e, i) => {
-    const updateTodos = todos.map((todo, index) => {
-      if (index === i) {
-        return { ...todo, done: e.target.checked }
-      }
-      return todo
+    dispatch({
+      type: 'TOGGLE_DONE',
+      payload: i
     })
-    setTodos(updateTodos)
+    // const updateTodos = todos.map((todo, index) => {
+    //   if (index === i) {
+    //     return { ...todo, done: e.target.checked }
+    //   }
+    //   return todo
+    // })
+    // setTodos(updateTodos)
   }
 
   const handleDelete = (e, i) => {
-    const updateTodos = todos.filter((todo, index) => index !== i)
-    setTodos(updateTodos)
+    dispatch({
+      type: 'DELETE_TODO',
+      payload: i
+    })
+
+    // const updateTodos = todos.filter((todo, index) => index !== i)
+    // setTodos(updateTodos)
   }
 
   const handleAdd = () => {
-    const updateTodos = [...todos, { done: false, content: newTodo }]
-    setTodos(updateTodos)
+    dispatch({
+      type: 'ADD_TODO',
+      payload: { done: false, content: newTodo }
+    })
+    // const updateTodos = [...todos, { }]
+    // setTodos(updateTodos)
     setNewTodo('')
   }
 
@@ -31,14 +48,19 @@ const Main = () => {
   }
 
   const handleChange = (e, i) => {
-    const updateTodos = todos.map((todo, index) => {
-  if (index === i) {
-    return { ...todo, content: e.target.value }
-  }
-  return todo;
-})
-setTodos(updateTodos)
+    dispatch({
+      type: 'UPDATE_TODO',
+      payload: { index: i, content: e.target.value}
+ 
+    })
 
+    // const updateTodos = todos.map((todo, index) => {
+    //   if (index === i) {
+    //     return { ...todo, content: e.target.value }
+    //   }
+    //   return todo
+    // })
+    // setTodos(updateTodos)
   }
 
   return (
@@ -65,16 +87,17 @@ setTodos(updateTodos)
                 {isEdit !== index ? (
                   <span>{todo.content}</span>
                 ) : (
-                  <input value={todo.content} onChange = {e => handleChange(e, index)}/>
+                  <input
+                    value={todo.content}
+                    onChange={e => handleChange(e, index)}
+                  />
                 )}
               </td>
               <td>
                 {isEdit !== index ? (
                   <button onClick={() => setIsEdit(index)}>edit</button>
                 ) : (
-                  <button onClick={() => setIsEdit(-1)}>
-                     done
-                  </button>
+                  <button onClick={() => setIsEdit(-1)}>done</button>
                 )}
               </td>
               <td>
@@ -89,17 +112,17 @@ setTodos(updateTodos)
 }
 export default Main
 
-const tds = [
-  {
-    done: true,
-    content: 'abc'
-  },
-  {
-    done: false,
-    content: 'qwe'
-  },
-  {
-    done: false,
-    content: 'efgh'
-  }
-]
+// const tds = [
+//   {
+//     done: true,
+//     content: 'abc'
+//   },
+//   {
+//     done: false,
+//     content: 'qwe'
+//   },
+//   {
+//     done: false,
+//     content: 'efgh'
+//   }
+// ]
