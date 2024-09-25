@@ -88,7 +88,7 @@ const Main = () => {
                   <span>{todo.content}</span>
                 ) : (
                   <input
-                    value={todo.content}
+                    value={todo.content} required
                     onChange={e => handleChange(e, index)}
                   />
                 )}
